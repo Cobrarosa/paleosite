@@ -1,0 +1,22 @@
+/**
+ * Classes and helpers that modifies exisiting vendor libraries (i.e. Bootstrap )
+ */
+// TODO: Move bootstrap overrides to separate file
+
+// Add additional larger breaking points to accomodate wider layout
+
+ .no-gutter > [class*='col-'],
+ .no-gutter > a [class*='col-'] {
+     padding-right:0;
+     padding-left:0;
+ }
+ .no-col-gutter {
+	 padding-right:0;
+	 padding-left:0;
+ }
+
+ .text-left           { text-align: left; }
+ .text-right          { text-align: right; }
+ .text-center         { text-align: center; }
+ .text-justify        { text-align: justify; }
+ .text-nowrap         { white-space: nowrap; }

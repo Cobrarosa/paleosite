@@ -1,0 +1,178 @@
+
+// Create REM values with PX fall back
+//
+// Generate a REM with PX fallback from
+// $baseFontSize. Enter the desired size based
+// on pixels in numerical form. Supports shorthand.
+//
+// Forked from: http://codepen.io/thejameskyle/pen/JmBjc
+//
+// @author Greg Rickaby
+// @since 1.0
+//
+// Usage: @include rem($property, $values);
+// Example Usage:
+//    @include rem(font-size, 16px);
+//    @include rem(margin, 0 24px 0 12px);
+//
+// Outputs:
+//    font-size: 16px;
+//    font-size: 1.6rem;
+//    margin: 0 24px 0 12px;
+//    margin: 0 2.4rem 0 1.2rem;
+// ----------------------------------
+$baseFontSize: 10; // Based on HTML reset html { font-size: 62.5%; }
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+@mixin rem($property, $values) {
+	$px : ();
+	$rem: ();
+	$root: $baseFontSize;
+	@each $value in $values {
+		@if $value == 0 or $value == auto {
+			$px : append($px , $value);
+			$rem: append($rem, $value);
+		}
+		@else if type-of($value) == number {
+			$unit: unit($value);
+			$val: parseInt($value);
+			@if $unit == "px" {
+				$px : append($px,  $value);
+				$rem: append($rem, ($val / $root + rem));
+			}
+			@if $unit == "rem" {
+				$px : append($px,  ($val * $root + px));
+				$rem: append($rem, $value);
+			}
+		}
+		@else {
+			$px : append($px,  $value);
+			$rem: append($rem, $value);
+		}
+	}
+	@if $px == $rem {
+		#{$property}: $px;
+	} @else {
+		#{$property}: $px;
+		#{$property}: $rem;
+	}
+}
+@function rem($value) {
+	$root: $baseFontSize;
+	$val: parseInt($value);
+	$return: ();
+	@if unit($value) == "px" {
+		$return: append($return, ($val / $root + rem));
+	} @else {
+		$return: append($return, ($val * $root + px));
+	}
+	@return $return;
+}
+/*--------------------------------------------------------------
+Clear-fix mixin
+--------------------------------------------------------------*/
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    & {
+        zoom: 1; /* ie 6/7 */
+    }
+}
+/*--------------------------------------------------------------
+Vertical align mixin
+--------------------------------------------------------------*/
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+/*--------------------------------------------------------------
+Media query mixin
+--------------------------------------------------------------*/
+
+@mixin bp-small {
+  @media all and ( min-width: #{$bp-small} )  {
+    @content;
+  }
+}
+@mixin bp-small-2 {
+  @media all and ( min-width: #{$bp-small-2} )  {
+    @content;
+  }
+}
+@mixin bp-small-3 {
+  @media all and ( min-width: #{$bp-small-3} )  {
+    @content;
+  }
+}
+
+@mixin bp-med {
+  @media all and ( min-width: #{$bp-med} )  {
+    @content;
+  }
+}
+@mixin bp-med-2 {
+  @media all and ( min-width: #{$bp-med-2} )  {
+    @content;
+  }
+}
+@mixin bp-large {
+  @media all and ( min-width: #{$bp-large} )  {
+    @content;
+  }
+}
+@mixin bp-xl {
+  @media all and ( min-width: #{$bp-xl} )  {
+    @content;
+  }
+}
+@mixin bp-xl-2 {
+  @media all and ( min-width: #{$bp-xl-2} )  {
+    @content;
+  }
+}
+@mixin bp-xl-3 {
+  @media all and ( min-width: #{$bp-xl-3} )  {
+    @content;
+  }
+}
+/*--------------------------------------------------------------
+BEM CSS mixins
+--------------------------------------------------------------*/
+/// @alias element
+@mixin e($element) {
+    @include element($element)  {
+        @content;
+    }
+}
+/// @alias modifier
+@mixin m($modifier) {
+    @include modifier($modifier) {
+        @content;
+    }
+}
+/// Block Element
+/// @access public
+/// @param {String} $element - Element's name
+@mixin element($element) {
+    &__#{$element} {
+        @content;
+    }
+}
+/// Block Modifier
+/// @access public
+/// @param {String} $modifier - Modifier's name
+@mixin modifier($modifier) {
+    &--#{$modifier} {
+        @content;
+    }
+}

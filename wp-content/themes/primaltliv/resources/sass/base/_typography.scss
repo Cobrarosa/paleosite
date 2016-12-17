@@ -1,0 +1,17 @@
+//@import '//fonts.googleapis.com/css?family=Roboto:300,400,500';
+
+/*Basic font scale value*/
+// Modular scale settings for fluid typography
+// $ms-base: 16px;
+// $ms-ratio: $golden;
+// $ms-range:
+//   1  20em,
+//   1.25	60em;
+
+$line-height:
+  1  20em;
+
+body{
+	background-color: $color-blue-1;
+	color: #fff;
+}
